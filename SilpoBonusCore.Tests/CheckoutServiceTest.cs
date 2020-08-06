@@ -7,17 +7,16 @@ private Product milk_7;
     private Product bread_3;
 
     
-    public void TestInitialize() {
+    public CheckoutServiceTest() {
         checkoutService = new CheckoutService();
         checkoutService.openCheck();
-        milk_7 = new Product(7, "Milk");
+        milk_7 = new Product(7, "Milk", Category.MILK);
         bread_3 = new Product(3, "Bread");
     }
-    
+
 
     [Fact]
     void closeCheck__withOneProduct() {
-        TestInitialize();
         checkoutService.addProduct(milk_7);
         Check check = checkoutService.closeCheck();
         Assert.Equal(check.getTotalCost(), 7);
@@ -25,7 +24,6 @@ private Product milk_7;
 
     [Fact]
     void closeCheck__withTwoProducts() {
-        TestInitialize();
         checkoutService.addProduct(milk_7);
         checkoutService.addProduct(bread_3);
         Check check = checkoutService.closeCheck();
@@ -34,7 +32,6 @@ private Product milk_7;
 
     [Fact]
     void addProduct__whenCheckIsClosed__opensNewCheck() {
-        TestInitialize();
         checkoutService.addProduct(milk_7);
         Check milkCheck = checkoutService.closeCheck();
         Assert.Equal(milkCheck.getTotalCost(), 7);
@@ -45,7 +42,7 @@ private Product milk_7;
     }
     [Fact]
     void closeCheck__calcTotalPoints() {
-        TestInitialize();
+        
         checkoutService.addProduct(milk_7);
         checkoutService.addProduct(bread_3);
         Check check = checkoutService.closeCheck();
@@ -54,7 +51,7 @@ private Product milk_7;
 
     [Fact]
     void useOffer__addOfferPoints() {
-      TestInitialize();
+      
         checkoutService.addProduct(milk_7);
         checkoutService.addProduct(bread_3);
 
@@ -66,13 +63,25 @@ private Product milk_7;
 
     [Fact]
     void useOffer__whenCostLessThanRequired__doNothing() {
-        TestInitialize();
         checkoutService.addProduct(bread_3);
 
         checkoutService.useOffer(new AnyGoodsOffer(6, 2));
         Check check = checkoutService.closeCheck();
         Assert.Equal(check.getTotalPoints(), 3);
     }
+
+    [Fact]
+    void useOffer__factorByCategory() {
+        checkoutService.addProduct(milk_7);
+        checkoutService.addProduct(milk_7);
+        checkoutService.addProduct(bread_3);
+
+        checkoutService.useOffer(new FactorByCategoryOffer(Category.MILK, 2));
+        Check check = checkoutService.closeCheck();
+        Assert.Equal(check.getTotalPoints(), 31);
+        
+        }
+
 
 
 }
