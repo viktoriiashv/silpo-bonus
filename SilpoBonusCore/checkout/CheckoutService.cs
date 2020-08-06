@@ -27,18 +27,7 @@ public class CheckoutService {
 
     public void useOffer(Offer offer) {
             offer.apply(check);
-         if (offer is FactorByCategoryOffer) {
-            FactorByCategoryOffer fbOffer = (FactorByCategoryOffer) offer;
-            int points = check.getCostByCategory(fbOffer.category);
-            check.addPoints(points * (fbOffer.factor - 1));
-        } else {
-            if (offer is AnyGoodsOffer) {
-                AnyGoodsOffer agOffer = (AnyGoodsOffer) offer;
-                if (agOffer.totalCost <= check.getTotalCost())
-                    check.addPoints(agOffer.points);
-
         }
 
     }
 
-}

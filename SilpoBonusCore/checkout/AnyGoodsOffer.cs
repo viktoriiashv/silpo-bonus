@@ -9,6 +9,7 @@ public class AnyGoodsOffer : Offer {
     }
 
       public override void apply(Check check) {
-
+        if (totalCost <= check.getTotalCost())
+             check.addPoints(points);
     }
 }
