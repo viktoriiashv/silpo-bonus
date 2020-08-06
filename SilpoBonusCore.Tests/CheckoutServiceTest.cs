@@ -52,4 +52,27 @@ private Product milk_7;
         Assert.Equal(check.getTotalCost(), 10);
     }
 
+    [Fact]
+    void useOffer__addOfferPoints() {
+      TestInitialize();
+        checkoutService.addProduct(milk_7);
+        checkoutService.addProduct(bread_3);
+
+        checkoutService.useOffer(new AnyGoodsOffer(6, 2));
+        Check check = checkoutService.closeCheck();
+        Assert.Equal(check.getTotalPoints(), 12);
+        
+    }
+
+    [Fact]
+    void useOffer__whenCostLessThanRequired__doNothing() {
+        TestInitialize();
+        checkoutService.addProduct(bread_3);
+
+        checkoutService.useOffer(new AnyGoodsOffer(6, 2));
+        Check check = checkoutService.closeCheck();
+        Assert.Equal(check.getTotalPoints(), 3);
+    }
+
+
 }
