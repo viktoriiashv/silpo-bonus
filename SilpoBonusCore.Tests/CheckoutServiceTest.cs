@@ -19,7 +19,7 @@ private Product milk_7;
     void closeCheck__withOneProduct() {
         checkoutService.addProduct(milk_7);
         Check check = checkoutService.closeCheck();
-        Assert.Equal(check.getTotalCost(), 7);
+        Assert.Equal(7, check.getTotalCost());
     }
 
     [Fact]
@@ -27,18 +27,18 @@ private Product milk_7;
         checkoutService.addProduct(milk_7);
         checkoutService.addProduct(bread_3);
         Check check = checkoutService.closeCheck();
-        Assert.Equal(check.getTotalCost(), 10);
+        Assert.Equal(10, check.getTotalCost());
     }
 
     [Fact]
     void addProduct__whenCheckIsClosed__opensNewCheck() {
         checkoutService.addProduct(milk_7);
         Check milkCheck = checkoutService.closeCheck();
-        Assert.Equal(milkCheck.getTotalCost(), 7);
+        Assert.Equal(7, milkCheck.getTotalCost());
 
         checkoutService.addProduct(bread_3);
         Check breadCheck = checkoutService.closeCheck();
-        Assert.Equal(breadCheck.getTotalCost(), 3);
+        Assert.Equal(3, breadCheck.getTotalCost());
     }
     [Fact]
     void closeCheck__calcTotalPoints() {
@@ -46,7 +46,7 @@ private Product milk_7;
         checkoutService.addProduct(milk_7);
         checkoutService.addProduct(bread_3);
         Check check = checkoutService.closeCheck();
-        Assert.Equal(check.getTotalCost(), 10);
+        Assert.Equal(10, check.getTotalCost());
     }
 
     [Fact]
@@ -57,7 +57,7 @@ private Product milk_7;
 
         checkoutService.useOffer(new AnyGoodsOffer(6, 2, new DateTime(2020, 8, 10)));
         Check check = checkoutService.closeCheck();
-        Assert.Equal(check.getTotalPoints(), 12);
+        Assert.Equal(12, check.getTotalPoints());
         
     }
 
@@ -67,7 +67,7 @@ private Product milk_7;
 
         checkoutService.useOffer(new AnyGoodsOffer(6, 2, new DateTime(2020,8,10)));
         Check check = checkoutService.closeCheck();
-        Assert.Equal(check.getTotalPoints(), 3);
+        Assert.Equal(3, check.getTotalPoints());
     }
     
     [Fact]
@@ -78,7 +78,7 @@ private Product milk_7;
 
         checkoutService.useOffer(new FactorByCategoryOffer(Category.MILK, 2, new DateTime(2020, 8, 10)));
         Check check = checkoutService.closeCheck();
-        Assert.Equal(check.getTotalPoints(), 31);
+        Assert.Equal(31, check.getTotalPoints());
         
         }
 
@@ -91,8 +91,22 @@ private Product milk_7;
 
         checkoutService.useOffer(new FactorByCategoryOffer(Category.MILK, 4, new DateTime(2020, 8, 1)));
         Check check = checkoutService.closeCheck();
-        Assert.Equal(check.getTotalPoints(), 17);
+        Assert.Equal(17, check.getTotalPoints());
 
+    }
+
+    [Fact]
+    public void useOffer_BeforeCheckClose()
+    {
+        checkoutService.addProduct(milk_7);
+        checkoutService.addProduct(bread_3);
+
+        checkoutService.useOffer(new FactorByCategoryOffer(Category.MILK, 2, new DateTime(2020, 8, 10)));
+
+        checkoutService.addProduct(milk_7);
+        checkoutService.addProduct(bread_3);
+        Check check = checkoutService.closeCheck();
+        Assert.Equal(34, check.getTotalPoints());
     }
 
 

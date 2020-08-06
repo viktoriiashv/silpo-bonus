@@ -40,8 +40,8 @@ public class CheckoutService
         foreach (Offer offer in check.Offers)
         {
             bool isSucceed = offer.TryToApply(check);
-            if (!isSucceed)
-            {
+            if (!isSucceed) //in case we wont print or return something
+            {   
                 Console.WriteLine(offer.GetType() + "Can't be used");
             }
         }
