@@ -13,5 +13,9 @@ public class Check {
     internal void addProduct(Product product) {
         products.Add(product);
     }
+    public int getTotalPoints() {
+        return getTotalCost();
+    }
+
 
 }
