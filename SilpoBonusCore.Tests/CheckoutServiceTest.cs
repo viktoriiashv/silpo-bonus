@@ -19,9 +19,8 @@ public class CheckoutServiceTest {
         checkoutService.openCheck();
 
         checkoutService.addProduct(new Product(7, "Milk"));
-        checkoutService.addProduct(new Product(3, "Bred"));
+        checkoutService.addProduct(new Product(3, "Bread"));
         Check check = checkoutService.closeCheck();
-
         Assert.Equal(check.getTotalCost(), 10);
     }
 }
