@@ -96,7 +96,7 @@ private Product milk_7;
     }
 
     [Fact]
-    public void useOffer_BeforeCheckClose()
+    public void useOffer_BeforeCheckCloseFactorByCategoryOffer()
     {
         checkoutService.addProduct(milk_7);
         checkoutService.addProduct(bread_3);
@@ -107,6 +107,22 @@ private Product milk_7;
         checkoutService.addProduct(bread_3);
         Check check = checkoutService.closeCheck();
         Assert.Equal(34, check.getTotalPoints());
+    }
+
+    [Fact]
+    public void useOffer_BeforeCheckCloseAnyGoodsOffer()
+    {
+        checkoutService.addProduct(milk_7);
+        checkoutService.addProduct(bread_3);
+
+        checkoutService.useOffer(new AnyGoodsOffer(10, 5, new DateTime(2020, 8, 10)));
+
+        checkoutService.addProduct(milk_7);
+        checkoutService.addProduct(bread_3);
+
+        checkoutService.useOffer(new AnyGoodsOffer(15, 5, new DateTime(2020, 8, 10)));
+        Check check = checkoutService.closeCheck();
+        Assert.Equal(30, check.getTotalPoints());
     }
 
 
