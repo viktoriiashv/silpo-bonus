@@ -6,17 +6,6 @@ public abstract class Offer
     {
         this.expirationDate = expirationDate;
     }
-    public DateTime ExpirationDate
-    {
-        get
-        {
-            return expirationDate;
-        }
-        set
-        {
-            expirationDate = value;
-        }
-    }
 
     //step methods
     public abstract bool DoesSatisfyCondition(Check check);
@@ -34,15 +23,18 @@ public abstract class Offer
 
     }
 
-    public void TryToApply(Check check) //template method, that contains functions calls
+    public bool TryToApply(Check check) //template method, that contains functions calls
     {
         if (IsOfferValid()) //step1
         {
             if (DoesSatisfyCondition(check)) //step2
             {
                 check.addPoints(CalcPoints(check)); //step3
+                return true;
             }
+            return false;
 
         }
+        return false;
     }
 }

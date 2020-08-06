@@ -22,8 +22,8 @@ public class CheckoutService
 
 
     public Check closeCheck()
-    {
-
+    {   
+        ApplyOffers();
         Check closedCheck = check;
         check = null;
         return closedCheck;
@@ -32,8 +32,19 @@ public class CheckoutService
 
     public void useOffer(Offer offer)
     {
-        offer.TryToApply(check);
+        check.Offers.Add(offer);
+        //offer.TryToApply(check);
     }
 
+    public void ApplyOffers() {
+        foreach (Offer offer in check.Offers)
+        {
+            bool isSucceed = offer.TryToApply(check);
+            if (!isSucceed)
+            {
+                Console.WriteLine(offer.GetType() + "Can't be used");
+            }
+        }
+    }
 }
 

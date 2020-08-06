@@ -4,6 +4,7 @@ using System.Linq;
 public class Check
 {
     private List<Product> products = new List<Product>();
+    public List<Offer> Offers { get; set; } = new List<Offer>();
     private int points = 0;
     public int getTotalCost()
     {
