@@ -35,6 +35,14 @@ public class Check
             .Sum(product => product.price);
     }
 
+    internal int getCostByTrade(Trade trade)
+    {
+        return products
+            .Where(product => product.trade.Equals(trade))
+            .Sum(product => product.price);
+    }
+
+
 
 
 }

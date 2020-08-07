@@ -10,7 +10,7 @@ private Product milk_7;
     public CheckoutServiceTest() {
         checkoutService = new CheckoutService();
         checkoutService.openCheck();
-        milk_7 = new Product(7, "Milk", Category.MILK);
+        milk_7 = new Product(7, "Milk", Category.MILK, Trade.Silpo);
         bread_3 = new Product(3, "Bread");
     }
 
@@ -123,6 +123,17 @@ private Product milk_7;
         checkoutService.useOffer(new AnyGoodsOffer(15, 5, new DateTime(2020, 8, 10)));
         Check check = checkoutService.closeCheck();
         Assert.Equal(30, check.getTotalPoints());
+    }
+
+    [Fact]
+    public void useOffer_ByTrade()
+    {
+        checkoutService.addProduct(milk_7);
+        checkoutService.addProduct(bread_3);
+
+        checkoutService.useOffer(new ByTrade(Trade.Silpo, 10, new DateTime(2020, 8, 10)));
+        Check check = checkoutService.closeCheck();
+        Assert.Equal(20, check.getTotalPoints());
     }
 
 
