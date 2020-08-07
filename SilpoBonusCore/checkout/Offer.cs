@@ -12,15 +12,7 @@ public abstract class Offer
     public abstract int CalcPoints(Check check);
     public bool IsOfferValid()
     {
-        if (expirationDate > DateTime.Now)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
+        return expirationDate > DateTime.Now;
     }
 
     public bool TryToApply(Check check) //template method, that contains functions calls
