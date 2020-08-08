@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 
 
-interface IReward
+public interface IDiscountRule
 {
+    int CalculateDiscount(Check check);
 }
 

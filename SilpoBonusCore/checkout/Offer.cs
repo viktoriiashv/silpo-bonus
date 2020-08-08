@@ -2,31 +2,24 @@ using System;
 public abstract class Offer
 {
     private DateTime expirationDate;
-    public Offer(DateTime expirationDate)
+    private ICondition condition;
+    public Offer(DateTime expirationDate, ICondition condition)
     {
         this.expirationDate = expirationDate;
+        this.condition = condition;
     }
-
-    //step methods
-    public abstract bool DoesSatisfyCondition(Check check);
-    public abstract int CalcPoints(Check check);
     public bool IsOfferValid()
     {
         return expirationDate > DateTime.Now;
     }
+    
+    public abstract void Apply(Check check);
 
-    public bool TryToApply(Check check) //template method, that contains functions calls
+    public void useOffer(Check check)
     {
-        if (IsOfferValid()) //step1
+        if (IsOfferValid() && condition.DoesSatisfyCondition(check))
         {
-            if (DoesSatisfyCondition(check)) //step2
-            {
-                check.addPoints(CalcPoints(check)); //step3
-                return true;
-            }
-            return false;
-
+            Apply(check);
         }
-        return false;
     }
 }

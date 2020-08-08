@@ -4,7 +4,8 @@ using System.Collections.Generic;
 public class CheckoutService
 {
 
-    private Check check;
+    private Check check ;
+    public List<Offer> Offers { get; set; } = new List<Offer>();
 
     public void openCheck()
     {
@@ -22,7 +23,7 @@ public class CheckoutService
 
 
     public Check closeCheck()
-    {   
+    {
         ApplyOffers();
         Check closedCheck = check;
         check = null;
@@ -32,18 +33,14 @@ public class CheckoutService
 
     public void useOffer(Offer offer)
     {
-        check.Offers.Add(offer);
-        //offer.TryToApply(check);
+        Offers.Add(offer);
     }
 
-    public void ApplyOffers() {
-        foreach (Offer offer in check.Offers)
+    public void ApplyOffers()
+    {
+        foreach (Offer offer in Offers)
         {
-            bool isSucceed = offer.TryToApply(check);
-            if (!isSucceed) //in case we wont print or return something
-            {   
-                Console.WriteLine(offer.GetType() + "Can't be used");
-            }
+            offer.useOffer(check);
         }
     }
 }

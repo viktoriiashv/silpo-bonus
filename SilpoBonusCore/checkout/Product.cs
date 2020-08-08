@@ -25,11 +25,24 @@ public class Product
         this.category = category;
     }
 
-    public Product(int price, string name) : this(price, name, 0 , 0)
+    public Product(int price, string name) : this(price, name, 0, 0)
     {
         this.price = price;
         this.name = name;
     }
 
+    public override bool Equals(Object obj)
+    {
+
+        if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+        {
+            return false;
+        }
+        else
+        {
+            Product p = (Product)obj;
+            return (name == p.name) && (price == p.price) && (trade == p.trade) && (category == p.category);
+        }
+    }
 
 }
